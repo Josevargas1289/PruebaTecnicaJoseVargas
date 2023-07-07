@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://expressjs.com/" target="blank"><img src="https://miro.medium.com/v2/resize:fit:1400/1*XP-mZOrIqX7OsFInN2ngRQ.png" width="200" alt="Nest Logo" /></a>
+  <a href="https://es.react.dev/" target="blank"><img src="https://blog.wildix.com/wp-content/uploads/2020/06/react-logo.jpg" width="200" alt="Nest Logo" /></a>
 </p>
 
 # ConsumofrontEnd
@@ -31,6 +31,6 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js, PostgreSQL
 ## Cómo ejecutar el proyecto
 
 1. Clonar el proyecto
-2. Ejecutar npm install
-3. Ejecutar la aplicacion con el comando npm run dev
+2. Ejecutar `npm install`
+3. Ejecutar la aplicacion con el comando `npm run dev`
 
