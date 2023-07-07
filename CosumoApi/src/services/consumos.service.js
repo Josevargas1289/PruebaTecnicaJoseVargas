@@ -5,33 +5,39 @@ const cosumoTop20 = require("../models/top20.models");
 const { Op } = require("sequelize");
 
 class ConsumoServices {
-  static async getAllVista1(fechaInit, fechaEnd) {
+  static async getAllVista1(fechaInit, fechaEnd, offset, limit) {
+    // console.log(typeof(offset) , typeof(limit) );
     try {
-      const response = await consumosTramos.findAll({
+      return await consumosTramos.findAll({
         where: {
           Fecha: {
             [Op.between]: [fechaInit, fechaEnd],
           },
         },
         attributes: { exclude: ["createdAt", "updatedAt"] },
+
+        offset,
+        limit,
       });
-      return response;
+      // return response;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getAllVista2(fechaInit, fechaEnd) {
+  static async getAllVista2(fechaInit, fechaEnd, offset, limit) {
     try {
-      const response = await consumosHistorico.findAll({
+      return await consumosHistorico.findAll({
         where: {
           Fecha: {
             [Op.between]: [fechaInit, fechaEnd],
           },
         },
-        attributes: { exclude: ["createdAt", "updatedAt", "id"] },
+        attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+        offset,
+        limit,
       });
-      return response;
+      // return response;
     } catch (error) {
       throw error;
     }

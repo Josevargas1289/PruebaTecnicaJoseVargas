@@ -52,7 +52,7 @@ const Vista1 = () => {
     
     }
   };
-  console.log(consumoV3);
+  // console.log(consumoV3);
 
   return (
     <div className=" flex-col ">
@@ -103,49 +103,51 @@ const Vista1 = () => {
           </div>
         </div>
       </form>
+    {
+      consumoV3 != 0 ?  <div className="flex mt-12 justify-center overflow-y-auto">
+      <table className=" w-10/12 text-sm text-center text-gray-500 dark:text-black  ">
+        <thead className="text-xs text-gray-00 uppercase bg-gray-50 dark:bg-indigo-600 dark:text-white font-black">
+          <tr>
+            <th scope="col" className="px-6 py-3">
+              LineaNombre
+            </th>
+            <th scope="col" className="px-6 py-3">
+              NombreCliente
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Perdida
+            </th>
+          </tr>
+        </thead>
 
-      <div className="flex mt-12 justify-center overflow-y-auto">
-        <table className=" w-10/12 text-sm text-center text-gray-500 dark:text-gray-50  ">
-          <thead className="text-xs text-gray-00 uppercase bg-gray-50 dark:bg-indigo-600 dark:text-white font-black">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                LineaNombre
-              </th>
-              <th scope="col" className="px-6 py-3">
-                NombreCliente
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Perdida
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {consumoV3.map((c, index) => (
-              <tr
-                key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        <tbody>
+          {consumoV3.map((c, index) => (
+            <tr
+              key={index}
+              className="bg-white border-b dark:bg-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              <th
+                scope="row"
+                className="px-6 py-4 font-sm text-gray-900 whitespace-nowrap dark:text-indigo-600"
               >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {c.LineaNombre}
-                </th>
-                <td className="px-6 py-4">{c.NombreCliente}</td>
-                <td className="px-6 py-4">{c.Perdida}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        
-      </div>
-      <div className=" text-center text-2xl mt-20 font-bold text-indigo-600">
+                {c.LineaNombre}
+              </th>
+              <td className="px-6 py-4">{c.NombreCliente}</td>
+              <td className="px-6 py-4">{c.Perdida}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      
+    </div>: <div className=" text-center text-2xl mt-20 font-bold text-indigo-600">
         {
           mesage ? (!consumoV3 || consumoV3.length == 0 ) && <h3>No hay datos en las fechas seleccionadas</h3>  :<div>Aquí se mostrarán los datos de la fechas seleccionadas</div>
           
         } 
       </div>
+    }
+     
+      
     </div>
   );
 };

@@ -1,18 +1,14 @@
 import swal from "sweetalert2";
 import axios from "axios";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
-
-
 
 const Vista1 = () => {
   const [fechaInit, setFechaInit] = useState("");
   const [fechaEnd, setFechaEnd] = useState("");
   const [consumoV1, setConsumoV1] = useState([]);
   const [mesage, setMesage] = useState(false);
- 
+  const [data, setData] = useState();
 
   const navigate = useNavigate();
 
@@ -20,23 +16,20 @@ const Vista1 = () => {
     navigate("/");
   };
 
-  const fetch = () => {
-    axios
-      .get(`http://localhost:3000/api/v1/consumos/${fechaInit}/${fechaEnd}`)
-      .then((res) => {
-        setConsumoV1(res.data);
-       
-        
-      });
+  const fetch = (url) => {
+    let urlFetch;
+    if (url) {
+      urlFetch = url;
+    } else {
+      urlFetch = `http://localhost:3000/api/v1/consumos/${fechaInit}/${fechaEnd}?limit=20&offset=0`;
+    }
+    axios.get(urlFetch).then((res) => {
+      setConsumoV1(res.data.data);
+      setData(res.data);
+    });
   };
 
-  
-
   const serachV1 = () => {
-   
-     
-   
-    
     if (fechaInit === "" || fechaEnd === "") {
       swal.fire({
         icon: "error",
@@ -47,12 +40,18 @@ const Vista1 = () => {
     } else {
       fetch();
       setTimeout(() => {
-        setMesage(true)
+        setMesage(true);
       }, 1000);
-    
     }
   };
-  // console.log(consumoV1);
+
+  const fetchPrevious = () => {
+    fetch(data.previous);
+  };
+
+  const fetchNext = () => {
+    fetch(data.next);
+  };
 
   return (
     <div className=" flex-col ">
@@ -70,7 +69,7 @@ const Vista1 = () => {
 
       <form>
         <div>
-          <h1 className="flex gap-3 justify-center w-80% mt-16 font-black text-xl text-indigo-600">
+          <h1 className="flex gap-3 justify-center w-80% mt-10 font-black text-xl text-indigo-600">
             Formulario de consulta
           </h1>
           <div className=" flex gap-3 justify-center w-80% mt-16  ">
@@ -104,48 +103,77 @@ const Vista1 = () => {
         </div>
       </form>
 
-      <div className="flex mt-12 justify-center overflow-y-auto">
-        <table className=" w-10/12 text-sm text-center text-gray-500 dark:text-gray-50  ">
-          <thead className="text-xs text-gray-00 uppercase bg-gray-50 dark:bg-indigo-600 dark:text-white font-black">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Consumo
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Perdidas
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Costo Consumo
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {consumoV1.map((c) => (
-              <tr
-                key={c.id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {c.Consumo}
+      <div className="flex-col justify-center content-center m-10">
+        {
+          consumoV1.length != 0 ? <div className=" flex justify-center gap-8 content-center">
+          <button
+            className=" bg-indigo-600 m-10 p-2 rounded-md font-bold disabled:bg-indigo-200 "
+            onClick={fetchPrevious}
+            disabled={data?.previous === null || consumoV1.length === 0}
+          >
+            Anterior
+          </button>
+          <h1 className=" font-black text-indigo-600">
+            Pag: {data?.data?.length}
+          </h1>
+          <button
+            className=" bg-indigo-600 m-10 p-2 rounded-md font-bold disabled:bg-indigo-200 "
+            onClick={fetchNext}
+            disabled={data?.next === null || consumoV1.length === 0}
+          >
+            Siguiente
+          </button>
+        </div> : <div></div> 
+        }
+        
+        {
+          consumoV1.length != 0 ? <div className=" flex justify-center ">
+          <table className=" w-10/12 text-sm text-center text-gray-500 dark:text-black  ">
+            <thead className="text-xs text-gray-00 uppercase bg-gray-50 dark:bg-indigo-600 dark:text-white font-black">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Consumo
                 </th>
-                <td className="px-6 py-4">{c.Perdida}</td>
-                <td className="px-6 py-4">{c.Costo}</td>
+                <th scope="col" className="px-6 py-3">
+                  Perdidas
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Costo Consumo
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {consumoV1?.map((c) => (
+                <tr
+                  key={c.id}
+                  className="bg-white border-b dark:bg-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-sm text-gray-900 whitespace-nowrap dark:text-indigo-600"
+                  >
+                    {c.Consumo}
+                  </th>
+                  <td className="px-6 py-4">{c.Perdida}</td>
+                  <td className="px-6 py-4">{c.Costo}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div> : <div className=" text-center text-2xl mt-20 font-bold text-indigo-600">
+        {mesage ? (
+          (!consumoV1 || consumoV1.length == 0) && (
+            <h3>No hay datos en las fechas seleccionadas</h3>
+          )
+        ) : (
+          <div>Aquí se mostrarán los datos de la fechas seleccionadas</div>
+        )}
+      </div>
+        }
         
       </div>
-      <div className=" text-center text-2xl mt-20 font-bold text-indigo-600">
-        {
-          mesage ? (!consumoV1 || consumoV1.length == 0 ) && <h3>No hay datos en las fechas seleccionadas</h3>  :<div>Aquí se mostrarán los datos de la fechas seleccionadas</div>
-          
-        } 
-      </div>
+      
     </div>
   );
 };

@@ -1,11 +1,11 @@
 const { DataTypes } = require("sequelize");
 const db = require("../utils/database");
 
-const consumosHistorico = db.define("vwConsumoTramos", {
+const consumosHistorico = db.define("vwHistoricoConsumos", {
   LineaNombre: {
     type: DataTypes.STRING,
   }, 
-  tipoCliente: {
+  NombreCliente: {
     type: DataTypes.STRING,
   },
 
