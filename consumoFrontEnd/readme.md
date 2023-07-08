@@ -12,7 +12,7 @@ La API ConsumofrontEnd está diseñada para interactuar con una API desarrollada
 
 1. Consulta el historico por cada tramo, que contenga el consumo, perdidas y costo por el consumo.
 2. Responde con una historia por cada tipo de usuario, que contenga el tramo, consumo, perdidas y costo por el consumo
-3. Responde con un listado con los tramos/cliente con las mayores pérdidas.
+3. Responde con un listado de los tramos/cliente con las mayores pérdidas.
 
 ## Principales  Tecnologías utilizadas
 

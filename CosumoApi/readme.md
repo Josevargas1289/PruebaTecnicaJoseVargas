@@ -26,20 +26,19 @@ La API de backend en NodeJS está diseñada para interactuar con una base de dat
 
 ## Requeisitos previos
 
-Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js, PostgreSQL, nodemon en tu máquina.
+Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js,  sql server,y nodemon en tu máquina.
 
 ## Cómo ejecutar el proyecto
 
 1. Clonar el proyecto
 2. Ejecutar `npm install`
-3. Clonar el archivo `.env.template` y renombrarlo a `.env`
-4. Cambiar las variables de entorno
+3. Cambiar las variables de entorno
 5. Levantar la base datos
 6. Levantar el modo de desarrollo: `npm run dev`
 
 ## Nota importante
 
-Para el correcto funcionamiento de la API es necesario crear en SQLSERVER las siguientes vistas, las cuales proporcionan los datos a cada uno de los enpoind de la aplicación.
+Para el correcto funcionamiento de la API es necesario crear en SQLSERVER las siguientes vistas, las cuales proporcionan los datos a cada uno de los endpoind de la aplicación.
 
 ##vista 1:
 
